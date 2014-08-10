@@ -1,15 +1,29 @@
 package be.khleuven.kvh.ksprong.model;
 
-
+/**
+ * Created by KEVIN on 8/08/2014.
+ */
 public class Attendance {
 
+
+    private long id;
     private String date;
     private float hour;
+    private User user;
 
 
-    public Attendance(String date, float hour) {
-      setDate(date);
-      setHour(hour);
+    public Attendance(String date, float hour, User user) {
+        setDate(date);
+        setHour(hour);
+        setUser(user);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -26,5 +40,13 @@ public class Attendance {
 
     public void setHour(float hour) {
         this.hour = hour;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

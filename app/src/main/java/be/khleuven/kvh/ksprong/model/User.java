@@ -2,7 +2,9 @@ package be.khleuven.kvh.ksprong.model;
 
 import java.util.ArrayList;
 
-
+/**
+ * Created by KEVIN on 8/08/2014.
+ */
 public class User {
 
     private long id;
@@ -15,7 +17,7 @@ public class User {
     private ArrayList<Attendance> attendances;
     private ArrayList<Payment> payments;
 
-    public User(int ud, String name, String surname, int checkedIn){
+    public User(int ud, String name, String surname){
         setUd(ud);
         setName(name);
         setSurname(surname);

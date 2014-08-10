@@ -1,20 +1,30 @@
 package be.khleuven.kvh.ksprong.model;
 
-
+/**
+ * Created by KEVIN on 8/08/2014.
+ */
 public class Payment {
 
-
+    private long id;
     private User user;
     private String month;
-    private boolean paid;
+    private int paid;
     private float total;
 
 
-    public Payment(User user, String month, boolean paid, float total) {
+    public Payment(User user, String month, int paid, float total) {
         setUser(user);
         setMonth(month);
         setPaid(paid);
         setTotal(total);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getMonth() {
@@ -25,11 +35,11 @@ public class Payment {
         this.month = month;
     }
 
-    public boolean isPaid() {
+    public int isPaid() {
         return paid;
     }
 
-    public void setPaid(boolean paid) {
+    public void setPaid(int paid) {
         this.paid = paid;
     }
 
