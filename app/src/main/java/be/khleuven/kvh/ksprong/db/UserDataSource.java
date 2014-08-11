@@ -79,6 +79,18 @@ public class UserDataSource {
         return user;
     }
 
+    public boolean doesExist(User user){
+
+        boolean res=false;
+        for(User u: getAllUsers()){
+            if(u.getUd()==user.getUd()){
+                res = true;
+            }
+
+        }
+        return res;
+    }
+
     public ArrayList<User> getAllUsers(){
         ArrayList<User> users = new ArrayList<User>();
         String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_USER;
@@ -98,9 +110,9 @@ public class UserDataSource {
 
             }
             while (c.moveToNext());
-            }
+        }
 
         return users;
-        }
+    }
     }
 

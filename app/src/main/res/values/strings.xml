@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">KSprong</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Kikkersprong</string>
     <string name="action_settings">Settings</string>
+
+    <!-- LoginActivity Strings ! -->
+    <string name="startButton">Start</string>
+
+    <!-- WelcomeActivity Strings ! -->
+    <string name="attendancebutText">Aanwezigheidslijst</string>
+    <string name="paymentbutText">Betalingsoverzicht</string>
+    <string name="welcomeText" formatted="false">Welkom %s %s.</string>
+    <string name="title_activity_payment">PaymentActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_attendance">AttendanceActivity</string>
+    <string name="title_activity_financial">FinancialActivity</string>
 
 </resources>
