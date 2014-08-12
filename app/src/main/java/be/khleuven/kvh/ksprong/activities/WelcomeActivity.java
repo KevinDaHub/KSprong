@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import be.khleuven.kvh.kikkersprong.Base.BaseActivity;
 import be.khleuven.kvh.kikkersprong.Constants.KikkersprongConstants;
@@ -28,7 +31,7 @@ public class WelcomeActivity extends BaseActivity {
     TextView mWelcomeTxt;
 
     private String contents;
-
+    private User user;
     private int mId;
     private String mFirstName;
     private String mName;
@@ -46,9 +49,9 @@ public class WelcomeActivity extends BaseActivity {
             mFirstName = extras.getString(KikkersprongConstants.INTENTUSERNAME);
             mName = extras.getString(KikkersprongConstants.INTENTLASTNAME);
         }
-
-        initializeWelcome();
         initializeDB();
+        initializeWelcome();
+
     }
 
     @OnClick(R.id.attendancebut)
@@ -76,13 +79,33 @@ public class WelcomeActivity extends BaseActivity {
 
     private void initializeDB() {
         userDb = new UserDataSource(this);
+        try {
+            userDb.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        user = userDb.getUser(mId);
+        userDb.close();
     }
 
 
     private void initializeWelcome() {
 
         Log.d(TAG, "Splitted: " + mId + " " + mFirstName + " " + mName);
-        mWelcomeTxt.setText(String.format(getResources().getString(R.string.welcomeText), mFirstName, mName));
+        Date now = new Date();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE", Locale.US);
+        String asWeek = dateFormat.format(now);
+
+        if (user.isCheckedIn() == 0) {
+            if (asWeek.equals("Fri")) {
+                mWelcomeTxt.setText(String.format(getResources().getString(R.string.weekendText), mFirstName + " ", mName));
+            } else {
+                mWelcomeTxt.setText(String.format(getResources().getString(R.string.goodbyeText), mFirstName + " ", mName));
+            }
+        } else {
+            mWelcomeTxt.setText(String.format(getResources().getString(R.string.welcomeText), mFirstName, mName));
+        }
     }
 
 

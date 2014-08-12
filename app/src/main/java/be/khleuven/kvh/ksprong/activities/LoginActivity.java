@@ -11,16 +11,17 @@ import com.google.zxing.integration.android.IntentResult;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import be.khleuven.kvh.ksprong.Base.BaseActivity;
-import be.khleuven.kvh.ksprong.Constants.KikkersprongConstants;
-import be.khleuven.kvh.ksprong.R;
-import be.khleuven.kvh.ksprong.db.AttendanceDataSource;
-import be.khleuven.kvh.ksprong.db.UserDataSource;
-import be.khleuven.kvh.ksprong.model.Attendance;
-import be.khleuven.kvh.ksprong.model.User;
+import be.khleuven.kvh.kikkersprong.Base.BaseActivity;
+import be.khleuven.kvh.kikkersprong.Constants.KikkersprongConstants;
+import be.khleuven.kvh.kikkersprong.R;
+import be.khleuven.kvh.kikkersprong.db.AttendanceDataSource;
+import be.khleuven.kvh.kikkersprong.db.UserDataSource;
+import be.khleuven.kvh.kikkersprong.model.Attendance;
+import be.khleuven.kvh.kikkersprong.model.User;
 import butterknife.ButterKnife;
 
 
@@ -70,9 +71,7 @@ public class LoginActivity extends BaseActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        User person = userDb.getUser(user.getUd());
-        if (person != null) {
-            if (person.getUd() > 0) {
+
                 user.setCheckedIn(0);
                 Date date = new Date();
                 Date date2 = null;
@@ -81,11 +80,13 @@ public class LoginActivity extends BaseActivity {
                 userDb.updateUser(user);
 
                 String string = user.getCheckInDate();
-                try {
-                    date2 = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(string);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        try{
+            date2 = sdf.parse(user.getCheckInDate());
+        }catch(ParseException e){
+            e.getStackTrace();
+        }
                 long starthours = date2.getTime();
                 long endhours = date.getTime();
 
@@ -98,12 +99,13 @@ public class LoginActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 attendanceDb.createAttendance(attendance);
-            }
-        }
-
         userDb.close();
         attendanceDb.close();
-    }
+            }
+
+
+
+
 
     private void checkIn(User user) {
 
@@ -115,7 +117,7 @@ public class LoginActivity extends BaseActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-                firstTime=false;
+
                 user.setCheckedIn(1);
                 Date date = new Date();
                 user.setCheckInDate(date.toString());
@@ -183,7 +185,7 @@ public class LoginActivity extends BaseActivity {
         }
             userDb.createUser(user);
             if (user.getUd() > 0) {
-                user.setCheckedIn(1);
+
                 Date date = new Date();
                 user.setCheckInDate(date.toString());
                 userDb.updateUser(user);
@@ -203,45 +205,44 @@ public class LoginActivity extends BaseActivity {
             User user = new User(mId, mFirstName, mName);
             //does the user exist
             boolean exist = userDb.doesExist(user);
-
+            Log.d(TAG, "User exists: " + exist);
             Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
-                if (!exist) {
-                    //if user does not exist create the user.
-                    createUser(user);
-                    welcomeIntent.putExtra(KikkersprongConstants.INTENTCHECKEDIN, false);
-                    welcomeIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
-                    welcomeIntent.putExtra(KikkersprongConstants.INTENTLASTNAME, mName);
-                    welcomeIntent.putExtra(KikkersprongConstants.INTENTID, mId);
+            if (!exist) {
+                //if user does not exist create the user.
+                createUser(user);
+                welcomeIntent.putExtra(KikkersprongConstants.INTENTCHECKEDIN, false);
+                welcomeIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
+                welcomeIntent.putExtra(KikkersprongConstants.INTENTLASTNAME, mName);
+                welcomeIntent.putExtra(KikkersprongConstants.INTENTID, mId);
 
-                    startActivity(welcomeIntent);
-                }
+                startActivity(welcomeIntent);
+
+            } else {
+                User person = userDb.getUser(mId);
 
                 if (mId > 0) {
 
-                  if(user.isCheckedIn()==0) {
-                      if (exist) {
-                          //if user exists and needs to check in
-                          checkIn(user);
+                    if (person.isCheckedIn() == 0) {
+                        if (exist) {
+                            //if user exists and needs to check in
+                            checkIn(person);
 
-                          welcomeIntent.putExtra(KikkersprongConstants.INTENTCHECKEDIN, false);
-                          welcomeIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
-                          welcomeIntent.putExtra(KikkersprongConstants.INTENTLASTNAME, mName);
-                          welcomeIntent.putExtra(KikkersprongConstants.INTENTID, mId);
+                            welcomeIntent.putExtra(KikkersprongConstants.INTENTCHECKEDIN, false);
+                            welcomeIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
+                            welcomeIntent.putExtra(KikkersprongConstants.INTENTLASTNAME, mName);
+                            welcomeIntent.putExtra(KikkersprongConstants.INTENTID, mId);
 
-                          startActivity(welcomeIntent);
-                      }
-                  }else{
-                      checkOut(user);
-                      welcomeIntent.putExtra(KikkersprongConstants.INTENTCHECKEDIN, true);
-                      welcomeIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
-                      welcomeIntent.putExtra(KikkersprongConstants.INTENTLASTNAME, mName);
-                      welcomeIntent.putExtra(KikkersprongConstants.INTENTID, mId);
+                            startActivity(welcomeIntent);
+                        }
+                    } else {
+                        checkOut(person);
+                        welcomeIntent.putExtra(KikkersprongConstants.INTENTCHECKEDIN, true);
+                        welcomeIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
+                        welcomeIntent.putExtra(KikkersprongConstants.INTENTLASTNAME, mName);
+                        welcomeIntent.putExtra(KikkersprongConstants.INTENTID, mId);
 
-                      startActivity(welcomeIntent);
-                  }
-
-
-
+                        startActivity(welcomeIntent);
+                    }
 
 
                 } else if (mId == -1) {
@@ -254,6 +255,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
             }
+        }
         }
     }
 
