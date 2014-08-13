@@ -13,9 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.db.PaymentDataSource;
-import be.khleuven.kvh.kikkersprong.model.Payment;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.db.PaymentDataSource;
+import be.khleuven.kvh.ksprong.model.Payment;
 
 /**
  * Created by KEVIN on 13/08/2014.
@@ -112,14 +112,16 @@ public class FinPaymentAdapter extends ArrayAdapter<Payment> {
         TextView txtPaid = (TextView) convertView.findViewById(R.id.txtPayPaid);
         if(payment.isPaid()==1){
             txtPaid.setText("Paid");
-        }else{
+        }else if(payment.isPaid()==0){
+
             txtPaid.setText("Not paid");
+            TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPayPrice);
+            String total = String.valueOf(payment.getTotal());
+            txtPrice.setText(total+" euro");
+
         }
         TextView txtUser = (TextView) convertView.findViewById(R.id.txtPayUser);
         txtUser.setText(payment.getUser().getName()+" "+payment.getUser().getSurname());
-        TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPayPrice);
-        String total = String.valueOf(payment.getTotal());
-        txtPrice.setText(total);
 
 
 

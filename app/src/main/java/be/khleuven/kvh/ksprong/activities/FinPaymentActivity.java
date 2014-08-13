@@ -10,12 +10,12 @@ import android.widget.ListView;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.adapters.FinPaymentAdapter;
-import be.khleuven.kvh.kikkersprong.db.PaymentDataSource;
-import be.khleuven.kvh.kikkersprong.db.UserDataSource;
-import be.khleuven.kvh.kikkersprong.model.Payment;
-import be.khleuven.kvh.kikkersprong.model.User;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.adapters.FinPaymentAdapter;
+import be.khleuven.kvh.ksprong.db.PaymentDataSource;
+import be.khleuven.kvh.ksprong.db.UserDataSource;
+import be.khleuven.kvh.ksprong.model.Payment;
+import be.khleuven.kvh.ksprong.model.User;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -25,10 +25,6 @@ public class FinPaymentActivity extends Activity {
     private static final String TAG = FinPaymentActivity.class.getName();
     private PaymentDataSource paymentDb;
     private UserDataSource userDb;
-    private int mId;
-    private String mFirstName;
-    private String mName;
-    private ListView listview;
     private ArrayList<Payment> payments=null;
     FinPaymentAdapter adapter;
 

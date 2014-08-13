@@ -16,7 +16,6 @@ import be.khleuven.kvh.ksprong.db.AttendanceDataSource;
 import be.khleuven.kvh.ksprong.db.UserDataSource;
 import be.khleuven.kvh.ksprong.model.Attendance;
 import be.khleuven.kvh.ksprong.model.User;
-import be.khleuven.kvh.ksprong.activities.AttendanceActivity;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 

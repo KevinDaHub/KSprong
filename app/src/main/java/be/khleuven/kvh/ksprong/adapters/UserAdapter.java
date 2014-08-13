@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import be.khleuven.kvh.kikkersprong.model.User;
+import be.khleuven.kvh.ksprong.model.User;
 
 /**
  * Created by KEVIN on 11/08/2014.

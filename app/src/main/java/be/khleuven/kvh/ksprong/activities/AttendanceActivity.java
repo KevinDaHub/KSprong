@@ -8,14 +8,15 @@ import android.widget.ListView;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.khleuven.kvh.kikkersprong.Constants.KikkersprongConstants;
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.adapters.AttendanceAdapter;
-import be.khleuven.kvh.kikkersprong.db.AttendanceDataSource;
-import be.khleuven.kvh.kikkersprong.db.UserDataSource;
-import be.khleuven.kvh.kikkersprong.model.Attendance;
-import be.khleuven.kvh.kikkersprong.model.User;
+import be.khleuven.kvh.ksprong.Constants.KikkersprongConstants;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.adapters.AttendanceAdapter;
+import be.khleuven.kvh.ksprong.db.AttendanceDataSource;
+import be.khleuven.kvh.ksprong.db.UserDataSource;
+import be.khleuven.kvh.ksprong.model.Attendance;
+import be.khleuven.kvh.ksprong.model.User;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by KEVIN on 8/08/2014.
@@ -30,7 +31,8 @@ public class AttendanceActivity extends Activity {
     private int mId;
     private String mFirstName;
     private String mName;
-    private ListView listview;
+    @InjectView(R.id.listView)
+    ListView listViewAttendance;
     private ArrayList<Attendance> attendances=null;
     private User user;
 
@@ -69,14 +71,10 @@ public class AttendanceActivity extends Activity {
 
         Attendance[] attendancesers = attendances.toArray(new Attendance[attendances.size()]);
 
-
-
-
         AttendanceAdapter adapter = new AttendanceAdapter(this,R.layout.list_view,attendancesers);
 
-        ListView listViewItems = new ListView(this);
-        listViewItems.setAdapter(adapter);
-        this.setContentView(listViewItems);
+        listViewAttendance.setAdapter(adapter);
+
         attendanceDb.close();
 
     }

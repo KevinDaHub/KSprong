@@ -1,6 +1,11 @@
 package be.khleuven.kvh.ksprong.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -10,12 +15,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import be.khleuven.kvh.kikkersprong.Base.BaseActivity;
-import be.khleuven.kvh.kikkersprong.Constants.KikkersprongConstants;
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.db.UserDataSource;
-import be.khleuven.kvh.kikkersprong.model.Attendance;
-import be.khleuven.kvh.kikkersprong.model.User;
+import be.khleuven.kvh.ksprong.Base.BaseActivity;
+import be.khleuven.kvh.ksprong.Constants.KikkersprongConstants;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.db.UserDataSource;
+import be.khleuven.kvh.ksprong.model.User;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -27,8 +31,10 @@ public class WelcomeActivity extends BaseActivity {
 
     private static final String TAG = WelcomeActivity.class.getName();
 
-    @InjectView(R.id.welcomeTxtView)
+   @InjectView(R.id.welcomeTxtView)
     TextView mWelcomeTxt;
+
+
 
     private String contents;
     private User user;
@@ -36,13 +42,16 @@ public class WelcomeActivity extends BaseActivity {
     private String mFirstName;
     private String mName;
     private UserDataSource userDb;
+    NetworkInfo.State mobile;
+    //wifi
+    NetworkInfo.State wifi;
+    ConnectivityManager conMan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.inject(this);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mId = extras.getInt(KikkersprongConstants.INTENTID);
@@ -50,14 +59,36 @@ public class WelcomeActivity extends BaseActivity {
             mName = extras.getString(KikkersprongConstants.INTENTLASTNAME);
         }
         initializeDB();
-        initializeWelcome();
+        conMan= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        //mobile
+        mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
+        //wifi
+        wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+
+
+        if (mobile == NetworkInfo.State.CONNECTED || mobile == NetworkInfo.State.CONNECTING) {
+
+            initializeWelcome();
+
+        } else if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
+
+            initializeWelcome();
+
+        } else {
+
+            setContentView(R.layout.activity_welcome_offline);
+            initializeWelcomeOffline();
+
+        }
+
+
+
 
     }
 
     @OnClick(R.id.attendancebut)
     public void attendanceView(){
-        Date date = new Date();
-        Attendance attendance = new Attendance(date.toString(),15,new User(1,"ke","vh"));
+
 
         Intent attendanceIntent = new Intent(this, AttendanceActivity.class);
         attendanceIntent.putExtra(KikkersprongConstants.INTENTUSERNAME, mFirstName);
@@ -89,7 +120,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
 
-    private void initializeWelcome() {
+   private void initializeWelcome() {
 
         Log.d(TAG, "Splitted: " + mId + " " + mFirstName + " " + mName);
         Date now = new Date();
@@ -100,13 +131,45 @@ public class WelcomeActivity extends BaseActivity {
         if (user.isCheckedIn() == 0) {
             if (asWeek.equals("Fri")) {
                 mWelcomeTxt.setText(String.format(getResources().getString(R.string.weekendText), mFirstName + " ", mName));
+
             } else {
                 mWelcomeTxt.setText(String.format(getResources().getString(R.string.goodbyeText), mFirstName + " ", mName));
+
             }
         } else {
             mWelcomeTxt.setText(String.format(getResources().getString(R.string.welcomeText), mFirstName, mName));
+
+
         }
+       mWelcomeTxt.setTextColor(Color.parseColor("#cececa"));
+       mWelcomeTxt.setTypeface(null, Typeface.BOLD);
     }
+    private void initializeWelcomeOffline() {
+        TextView mWelcomeOffTxt= (TextView)findViewById(R.id.textViewOfflineAttend);
+
+        Log.d(TAG, "Splitted: " + mId + " " + mFirstName + " " + mName);
+        Date now = new Date();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE", Locale.US);
+        String asWeek = dateFormat.format(now);
+
+        if (user.isCheckedIn() == 0) {
+            if (asWeek.equals("Fri")) {
+
+                mWelcomeOffTxt.setText(String.format(getResources().getString(R.string.weekendText), mFirstName + " ", mName));
+            } else {
+
+                mWelcomeOffTxt.setText(String.format(getResources().getString(R.string.goodbyeText), mFirstName + " ", mName));
+            }
+        } else {
+
+
+            mWelcomeOffTxt.setText(String.format(getResources().getString(R.string.welcomeText), mFirstName, mName));
+        }
+        mWelcomeOffTxt.setTextColor(Color.parseColor("#cececa"));
+        mWelcomeOffTxt.setTypeface(null, Typeface.BOLD);
+    }
+
 
 
 

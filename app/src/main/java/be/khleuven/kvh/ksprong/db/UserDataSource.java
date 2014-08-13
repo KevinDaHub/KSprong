@@ -110,9 +110,9 @@ public class UserDataSource {
 
             }
             while (c.moveToNext());
-        }
+            }
 
         return users;
-    }
+        }
     }
 

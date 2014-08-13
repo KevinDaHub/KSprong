@@ -40,7 +40,6 @@ public class FinAttendanceAdapter extends ArrayAdapter<Attendance> implements Fi
 
     }
 
-
     @Override
     public int getCount() {
         return data.length;
@@ -120,9 +119,12 @@ public class FinAttendanceAdapter extends ArrayAdapter<Attendance> implements Fi
             txtDate.setText(date + ": ");
         }
         TextView txtHour = (TextView) convertView.findViewById(R.id.txtFinHour);
-        int hours = (int)attendance.getHour();
-        String hour = String.valueOf(hours);
-        txtHour.setText(hour+" Hours");
+
+        long minute = (attendance.getHour() / (1000 * 60)) % 60;
+        long hour = (attendance.getHour() / (1000 * 60 * 60)) % 24;
+
+
+        txtHour.setText(hour+"."+minute+" Hours");
 
         TextView txtUser = (TextView) convertView.findViewById(R.id.txtFinUser);
         txtUser.setText(attendance.getUser().getName()+" "+attendance.getUser().getSurname());

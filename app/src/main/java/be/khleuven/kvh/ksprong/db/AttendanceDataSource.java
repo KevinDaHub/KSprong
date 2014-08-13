@@ -68,20 +68,20 @@ public class AttendanceDataSource {
             c.moveToFirst();
 
 
-        Attendance attendance  = new Attendance(c.getString(c.getColumnIndex(SQLiteHelper.COLUMN_DATE)),c.getFloat(c.getColumnIndex(SQLiteHelper.COLUMN_HOUR)),userDB.getUser(c.getInt(c.getColumnIndex(SQLiteHelper.COLUMN_USER))));
+        Attendance attendance  = new Attendance(c.getString(c.getColumnIndex(SQLiteHelper.COLUMN_DATE)),c.getLong(c.getColumnIndex(SQLiteHelper.COLUMN_HOUR)),userDB.getUser(c.getInt(c.getColumnIndex(SQLiteHelper.COLUMN_USER))));
 
         return attendance;
     }
 
     public ArrayList<Attendance> getAllAttendancesByChild(User user){
         ArrayList<Attendance> attendances = new ArrayList<Attendance>();
-        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_ATTENDANCE+" WHERE "+SQLiteHelper.COLUMN_USER+"="+user.getUd();
+        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_ATTENDANCE+" WHERE "+SQLiteHelper.COLUMN_USER+"="+user.getUd()+" ORDER BY " +SQLiteHelper.COLUMN_ID+" DESC";
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery,null);
 
         if(c.moveToFirst()){
             do {
-                Attendance attendance = new Attendance(c.getString(c.getColumnIndex(SQLiteHelper.COLUMN_DATE)),c.getFloat(c.getColumnIndex(SQLiteHelper.COLUMN_HOUR)),userDB.getUser(c.getInt(c.getColumnIndex(SQLiteHelper.COLUMN_USER))));
+                Attendance attendance = new Attendance(c.getString(c.getColumnIndex(SQLiteHelper.COLUMN_DATE)),c.getLong(c.getColumnIndex(SQLiteHelper.COLUMN_HOUR)),userDB.getUser(c.getInt(c.getColumnIndex(SQLiteHelper.COLUMN_USER))));
                 attendances.add(attendance);
 
             }
@@ -94,7 +94,7 @@ public class AttendanceDataSource {
 
     public ArrayList<Attendance> getAllAttendances(){
         ArrayList<Attendance> attendances = new ArrayList<Attendance>();
-        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_ATTENDANCE;
+        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_ATTENDANCE + " ORDER BY "+SQLiteHelper.COLUMN_ID+" DESC";
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery,null);
@@ -102,7 +102,7 @@ public class AttendanceDataSource {
 
         if(c.moveToFirst()){
             do {
-                Attendance attendance = new Attendance(c.getString(c.getColumnIndex(SQLiteHelper.COLUMN_DATE)),c.getFloat(c.getColumnIndex(SQLiteHelper.COLUMN_HOUR)),userDB.getUser(c.getInt(c.getColumnIndex(SQLiteHelper.COLUMN_USER))));
+                Attendance attendance = new Attendance(c.getString(c.getColumnIndex(SQLiteHelper.COLUMN_DATE)),c.getLong(c.getColumnIndex(SQLiteHelper.COLUMN_HOUR)),userDB.getUser(c.getInt(c.getColumnIndex(SQLiteHelper.COLUMN_USER))));
                 attendances.add(attendance);
 
             }

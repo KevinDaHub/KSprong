@@ -17,24 +17,30 @@
         android:layout_height="wrap_content"
         android:text="@string/attendancebutText"
         android:id="@+id/attendancefinbut"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:height="100dp"
+        android:width="400dp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/paymentbutText"
         android:id="@+id/paymentfinbut"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/attendancefinbut"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:width="400dp"
+        android:height="100dp"
+        android:layout_centerHorizontal="true" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dropboxtext"
         android:id="@+id/dropboxbut"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/paymentfinbut"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:height="100dp"
+        android:width="400dp"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

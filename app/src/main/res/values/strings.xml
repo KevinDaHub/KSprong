@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Kikkersprong</string>
+    <string name="app_name">ksprong</string>
     <string name="action_settings">Settings</string>
 
     <!-- LoginActivity Strings ! -->
@@ -10,10 +10,17 @@
     <!-- WelcomeActivity Strings ! -->
     <string name="attendancebutText">Aanwezigheidslijst</string>
     <string name="paymentbutText">Betalingsoverzicht</string>
-    <string name="welcomeText" formatted="false">Welkom %s %s.</string>
+    <string name="dropboxtext">GenerateInvoices</string>
+    <string name="welcomeText" formatted="false">Welkom %s %s!</string>
+    <string name="weekendText" formatted="false">Have a nice weekend %s %s!</string>
+    <string name="goodbyeText" formatted="false">Goodbye %s %s!</string>
     <string name="title_activity_payment">PaymentActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_attendance">AttendanceActivity</string>
     <string name="title_activity_financial">FinancialActivity</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <string name="title_activity_fin_attendance">FinAttendanceActivity</string>
+    <string name="title_activity_fin_payment">finPaymentActivity</string>
+    <color name="green">#0b8c3c</color>
 
 </resources>

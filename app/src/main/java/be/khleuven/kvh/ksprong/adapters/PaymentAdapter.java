@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.model.Payment;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.model.Payment;
 
 /**
  * Created by KEVIN on 11/08/2014.
@@ -40,6 +40,15 @@ public class PaymentAdapter  extends ArrayAdapter<Payment> {
 
         TextView txtMonth = (TextView) convertView.findViewById(R.id.txtMonth);
         txtMonth.setText(payment.getMonth());
+        TextView txtPaid = (TextView) convertView.findViewById(R.id.txtPaid);
+        if(payment.isPaid()==1){
+            txtPaid.setText("Paid");
+        }else if(payment.isPaid()==0){
+            txtPaid.setText("Not paid");
+            TextView txtPrice = (TextView) convertView.findViewById(R.id.txtTotal);
+            String total = String.valueOf(payment.getTotal());
+            txtPrice.setText(total+" euro");
+        }
 
 
 

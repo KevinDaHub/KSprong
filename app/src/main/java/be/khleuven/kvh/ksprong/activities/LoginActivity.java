@@ -15,13 +15,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import be.khleuven.kvh.kikkersprong.Base.BaseActivity;
-import be.khleuven.kvh.kikkersprong.Constants.KikkersprongConstants;
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.db.AttendanceDataSource;
-import be.khleuven.kvh.kikkersprong.db.UserDataSource;
-import be.khleuven.kvh.kikkersprong.model.Attendance;
-import be.khleuven.kvh.kikkersprong.model.User;
+import be.khleuven.kvh.ksprong.Base.BaseActivity;
+import be.khleuven.kvh.ksprong.Constants.KikkersprongConstants;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.db.AttendanceDataSource;
+import be.khleuven.kvh.ksprong.db.UserDataSource;
+import be.khleuven.kvh.ksprong.model.Attendance;
+import be.khleuven.kvh.ksprong.model.User;
 import butterknife.ButterKnife;
 
 
@@ -39,13 +39,16 @@ public class LoginActivity extends BaseActivity {
     private String mFirstName;
     private String mName;
     private String contents;
-    private boolean firstTime;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+
+
         initializeDB();
 
         startQRScanner();
@@ -53,13 +56,11 @@ public class LoginActivity extends BaseActivity {
 
     private void initializeDB() {
 
-        //SQLiteDatabase database = sqlHelper.getWritableDatabase();
         userDb = new UserDataSource(this);
         attendanceDb = new AttendanceDataSource(this);
 
 
-        //Toast.makeText(this, user.getCheckInDate(),
-        //Toast.LENGTH_LONG).show();
+
 
 
     }
@@ -79,7 +80,6 @@ public class LoginActivity extends BaseActivity {
                 user.setCheckOutDate(date.toString());
                 userDb.updateUser(user);
 
-                String string = user.getCheckInDate();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         try{
@@ -87,10 +87,14 @@ public class LoginActivity extends BaseActivity {
         }catch(ParseException e){
             e.getStackTrace();
         }
+
+
                 long starthours = date2.getTime();
+
                 long endhours = date.getTime();
 
                 long finalhours = endhours - starthours;
+
 
                 Attendance attendance = new Attendance(date.toString(), finalhours, user);
                 try {
@@ -183,15 +187,20 @@ public class LoginActivity extends BaseActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            userDb.createUser(user);
-            if (user.getUd() > 0) {
+        userDb.createUser(user);
 
-                Date date = new Date();
-                user.setCheckInDate(date.toString());
-                userDb.updateUser(user);
-            }
-        userDb.close();
+
+        if (user.getUd() > 0) {
+
+            Date date = new Date();
+
+            user.setCheckInDate(date.toString());
+            userDb.updateUser(user);
+
+            userDb.close();
+        }
     }
+
 
 
 

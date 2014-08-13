@@ -51,9 +51,12 @@ public class AttendanceAdapter extends ArrayAdapter<Attendance> {
             txtDate.setText(date + ": ");
         }
         TextView txtHour = (TextView) convertView.findViewById(R.id.txtHour);
-        int hours = (int)attendance.getHour();
-        String hour = String.valueOf(hours);
-        txtHour.setText(hour+" Hours");
+
+        long minute = (attendance.getHour() / (1000 * 60)) % 60;
+        long hour = (attendance.getHour() / (1000 * 60 * 60)) % 24;
+
+
+        txtHour.setText(hour+"."+minute+" Hours");
 
         return convertView;
 

@@ -45,11 +45,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     +COLUMN_CHECKOUTDATE+" Date );";
 
     private static final String CREATE_TABLE_ATTENDANCE=
-            "create table "+TABLE_ATTENDANCE+" ( "+COLUMN_IDE+" integer primary key autoincrement, "+COLUMN_DATE+" Date not null," +COLUMN_HOUR+" int not null,"+COLUMN_USER+"integer not null,FOREIGN KEY("+COLUMN_USER+") REFERENCES "+TABLE_USER+"("+COLUMN_ID+"));";
+            "create table "+TABLE_ATTENDANCE+" ( "+COLUMN_IDE+" integer primary key autoincrement, "+COLUMN_DATE+" Date not null," +COLUMN_HOUR+" int not null,"+COLUMN_USER+" integer not null,FOREIGN KEY("+COLUMN_USER+") REFERENCES "+TABLE_USER+"("+COLUMN_ID+"));";
 
     private static final String CREATE_TABLE_PAYMENT=
             "create table "+TABLE_PAYMENT+" ( "+COLUMN_IDE+" integer primary key autoincrement, "+COLUMN_MONTH+" char(10) not null," +COLUMN_TOTAL+" float," +
-                    COLUMN_ISPAID+" boolean not null,"+COLUMN_USER+"integer not null,FOREIGN KEY("+COLUMN_USER+") REFERENCES "+TABLE_USER+"("+COLUMN_ID+"));";
+                    COLUMN_ISPAID+" boolean not null,"+COLUMN_USER+" integer not null,FOREIGN KEY("+COLUMN_USER+") REFERENCES "+TABLE_USER+"("+COLUMN_ID+"));";
 
 
     public SQLiteHelper(Context context){
