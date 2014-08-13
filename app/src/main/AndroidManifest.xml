@@ -49,7 +49,7 @@
             android:name=".activities.FinancialActivity"
             android:label="@string/title_activity_financial" >
         </activity>
-      
+
     </application>
 
 </manifest>

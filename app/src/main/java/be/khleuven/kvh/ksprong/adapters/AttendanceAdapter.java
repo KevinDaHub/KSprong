@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-import be.khleuven.kvh.kikkersprong.R;
-import be.khleuven.kvh.kikkersprong.model.Attendance;
+import be.khleuven.kvh.ksprong.R;
+import be.khleuven.kvh.ksprong.model.Attendance;
 
 /**
  * Created by KEVIN on 11/08/2014.

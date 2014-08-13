@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import be.khleuven.kvh.kikkersprong.R;
 import be.khleuven.kvh.kikkersprong.model.User;
 
 /**
@@ -38,9 +36,9 @@ public class UserAdapter   extends ArrayAdapter<User> {
 
         User user = data[position];
 
-        TextView txtUser = (TextView) convertView.findViewById(R.id.txtUser);
+      /*  TextView txtUser = (TextView) convertView.findViewById(R.id.txtUser);
         txtUser.setText(user.getName() +" "+ user.getSurname());
-
+*/
 
         return convertView;
 

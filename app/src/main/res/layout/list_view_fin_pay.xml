@@ -6,7 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/txtFinDate"
+        android:id="@+id/txtPayDate"
         android:layout_marginTop="26dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -16,16 +16,27 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="New Text"
-        android:id="@+id/txtFinHour"
+        android:id="@+id/txtPayPaid"
         android:layout_marginLeft="80dp"
-        android:layout_alignTop="@+id/txtFinDate"
+        android:layout_alignTop="@+id/txtPayDate"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="New Text"
-        android:id="@+id/txtFinUser"
+        android:id="@+id/txtPayPrice"
+        android:layout_marginLeft="106dp"
+        android:layout_alignTop="@+id/txtPayUser"
+        android:layout_alignParentStart="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtPayUser"
         android:layout_marginTop="44dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -33,4 +44,3 @@
 
 
 </RelativeLayout>
-
